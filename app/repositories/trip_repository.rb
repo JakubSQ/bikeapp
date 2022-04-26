@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TripRepository
   class << self
     def week_result
@@ -17,7 +19,7 @@ class TripRepository
     end
 
     def ordinalize_period
-      ordered_period.group_by{|x| x.created_at.strftime("#{x.created_at.day.ordinalize}, %B")}
+      ordered_period.group_by { |x| x.created_at.strftime("#{x.created_at.day.ordinalize}, %B") }
     end
 
     def ordered_period

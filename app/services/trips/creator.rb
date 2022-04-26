@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trips
   class Creator
     def call(params)
@@ -14,14 +16,27 @@ module Trips
       @trip = Trip.new(params)
       return nil unless @trip.valid?
 
-      origin = params[:start_address].gsub(/[., '"]/,'')
-      destination = params[:destination_address].gsub(/[., '"]/,'')
-      
-      binding.pry
-      
-      response = HTTParty.get(url = URI("https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{destination}&key=#{ENV['DISTANCE_KEY']}&language=pl&region=PL"))
-      @trip.distance = (response["rows"][0]["elements"][0]["distance"]["value"]/1000.to_f).ceil
+      assign_distance(params)
       @trip.save
+    end
+
+    def assign_distance(params)
+      @trip.distance = distance(params)
+    end
+
+    def distance(params)
+      (api_response(params)['rows'][0]['elements'][0]['distance']['value'] / 1000.to_f).ceil
+    end
+
+    def api_response(params)
+      HTTParty.get(URI("https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{trip_parameters(params)[:origin]}&destinations=#{trip_parameters(params)[:destination]}&key=#{ENV.fetch(
+        'DISTANCE_KEY', nil
+      )}&language=pl&region=PL"))
+    end
+
+    def trip_parameters(params)
+      { origin: params[:start_address].gsub(/[., '"]/, ''),
+        destination: params[:destination_address].gsub(/[., '"]/, '') }
     end
   end
 end

@@ -1,0 +1,55 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - db/**/**
+    - features/support/env.rb
+    - config/**/**
+    - test/**/**
+    - bin/**/**
+    - node_modules/**/**
+Layout/LineLength:
+  Max: 120
+Metrics/ClassLength:
+  Max: 200
+Metrics/MethodLength:
+  Enabled: false
+Style/BlockComments:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Bundler/OrderedGems:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Style/OpenStructUse:
+  Enabled: false
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/LetSetup:
+  Enabled: false
+RSpec/DescribeClass:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context']
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NestedGroups:
+  Exclude:
+    - 'spec/models/shipping_method_spec.rb'
+RSpec/ContextWording:
+  Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+RSpec/RepeatedExampleGroupBody:
+  Exclude: 
+    - 'spec/requests/order_status_request_spec.rb'

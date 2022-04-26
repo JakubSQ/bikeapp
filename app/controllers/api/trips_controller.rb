@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class TripsController < ApplicationController
     protect_from_forgery with: :null_session
@@ -16,7 +18,7 @@ module Api
       trip = Trip.find(params[:id])
       render json: trip
     end
-    
+
     def weekly
       trips = TripRepository.week_result
       week_stat = Stats::Period.new.call(trips, request.path)
