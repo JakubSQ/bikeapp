@@ -1,6 +1,11 @@
-Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+# frozen_string_literal: true
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+Rails.application.routes.draw do
+  namespace :api do
+    resources :trips, only: %i[index create show]
+    scope 'stats' do
+      get '/weekly', to: 'trips#weekly'
+      get '/monthly', to: 'trips#monthly'
+    end
+  end
 end
