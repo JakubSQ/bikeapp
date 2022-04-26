@@ -19,7 +19,7 @@ module Trips
       
       binding.pry
       
-      response = HTTParty.get(url = URI("https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{destination}&key=#{Rails.application.credentials.google_distance[:secret_access_key]}&language=pl&region=PL"))
+      response = HTTParty.get(url = URI("https://maps.googleapis.com/maps/api/distancematrix/json?origins=#{origin}&destinations=#{destination}&key=#{ENV['DISTANCE_KEY']}&language=pl&region=PL"))
       @trip.distance = (response["rows"][0]["elements"][0]["distance"]["value"]/1000.to_f).ceil
       @trip.save
     end
